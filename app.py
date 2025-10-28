@@ -6,7 +6,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # Model aur columns load karo
-model = joblib.load('model/model.pkl')
+model = joblib.load('model.pkl')
 
 # Columns file load karo (agar hai)
 with open('model/columns.json', 'r') as f:
