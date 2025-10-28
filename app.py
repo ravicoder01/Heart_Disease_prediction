@@ -9,7 +9,7 @@ app = Flask(__name__)
 model = joblib.load('model.pkl')
 
 # Columns file load karo (agar hai)
-with open('model/columns.json', 'r') as f:
+with open('columns.json', 'r') as f:
     columns = json.load(f)
 
 # Home route
