@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        input {
+            margin: 5px 0;
+            padding: 8px;
+            width: 100%;
+        }
+        button {
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <form id="predictionForm">
+        <h2>Heart Disease Prediction</h2>
+
+        <label>Age:</label>
+        <input type="number" name="Age" required>
+
+        <label>RestingBP:</label>
+        <input type="number" name="RestingBP" required>
+
+        <label>Cholesterol:</label>
+        <input type="number" name="Cholesterol" required>
+
+        <label>FastingBS (0 or 1):</label>
+        <input type="number" name="FastingBS" required>
+
+        <label>MaxHR:</label>
+        <input type="number" name="MaxHR" required>
+
+        <label>Oldpeak:</label>
+        <input type="number" name="Oldpeak" step="0.1" required>
+
+        <button type="submit">Predict</button>
+
+        <h3 id="result"></h3>
+    </form>
+
+    <script>
+        const form = document.getElementById("predictionForm");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            const res = await fetch("/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            const result = await res.json();
+            document.getElementById("result").innerText =
+                result.prediction === 1
+                    ? "⚠️ Heart Disease Likely"
+                    : "✅ No Heart Disease";
+        });
+    </script>
+</body>
+</html>
