@@ -13,11 +13,14 @@ with open('columns.json', 'r') as f:
     columns = json.load(f)
 
 # Home route
-from flask import render_template
+from flask import Flask, render_template_string
 
 @app.route('/')
 def home():
-    return render_template("templates/index.html")
+    with open("index.html", "r", encoding="utf-8") as f:
+        html_content = f.read()
+    return render_template_string(html_content)
+
 
 # Prediction route
 @app.route('/predict', methods=['POST'])
