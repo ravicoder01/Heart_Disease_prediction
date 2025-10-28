@@ -5,69 +5,99 @@
     <title>Heart Disease Prediction</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #ffffff);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-        input {
-            margin: 5px 0;
-            padding: 8px;
-            width: 100%;
-        }
-        button {
-            padding: 10px;
-            background: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+        .container {
+            background: #fff;
+            padding: 25px 35px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 350px;
         }
         h2 {
             text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: 500;
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.2);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #result {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <form id="predictionForm">
+    <div class="container">
         <h2>Heart Disease Prediction</h2>
+        <form id="predictionForm">
+            <label>Age:</label>
+            <input type="number" name="Age" placeholder="Enter age (e.g. 45)" required>
 
-        <label>Age:</label>
-        <input type="number" name="Age" required>
+            <label>RestingBP:</label>
+            <input type="number" name="RestingBP" placeholder="Resting blood pressure (e.g. 120)" required>
 
-        <label>RestingBP:</label>
-        <input type="number" name="RestingBP" required>
+            <label>Cholesterol:</label>
+            <input type="number" name="Cholesterol" placeholder="Serum cholesterol (e.g. 200)" required>
 
-        <label>Cholesterol:</label>
-        <input type="number" name="Cholesterol" required>
+            <label>FastingBS (0 or 1):</label>
+            <input type="number" name="FastingBS" placeholder="0 = No, 1 = Yes" required>
 
-        <label>FastingBS (0 or 1):</label>
-        <input type="number" name="FastingBS" required>
+            <label>MaxHR:</label>
+            <input type="number" name="MaxHR" placeholder="Maximum heart rate (e.g. 150)" required>
 
-        <label>MaxHR:</label>
-        <input type="number" name="MaxHR" required>
+            <label>Oldpeak:</label>
+            <input type="number" name="Oldpeak" step="0.1" placeholder="ST depression (e.g. 1.2)" required>
 
-        <label>Oldpeak:</label>
-        <input type="number" name="Oldpeak" step="0.1" required>
+            <button type="submit">Predict</button>
 
-        <button type="submit">Predict</button>
-
-        <h3 id="result"></h3>
-    </form>
+            <h3 id="result"></h3>
+        </form>
+    </div>
 
     <script>
         const form = document.getElementById("predictionForm");
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
-
             const formData = new FormData(form);
             const data = Object.fromEntries(formData);
 
@@ -78,10 +108,12 @@
             });
 
             const result = await res.json();
-            document.getElementById("result").innerText =
+            const output = document.getElementById("result");
+            output.innerText =
                 result.prediction === 1
                     ? "⚠️ Heart Disease Likely"
                     : "✅ No Heart Disease";
+            output.style.color = result.prediction === 1 ? "red" : "green";
         });
     </script>
 </body>
