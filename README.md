@@ -38,18 +38,20 @@ The model processes the data and returns:
 
 The prediction is displayed instantly on the webpage.
 
-📁 Project Structure
+## 📁 Project Structure
+
+```
 heart_failure_prediction/
 │
-│── model.pkl               # Trained ML model
-│── columns.json            # Feature names used during training
+├── model.pkl               # Trained ML model
+├── columns.json            # Feature names used during training
 │
 ├── app.py                  # Flask backend
 │
-│── index.html              # Frontend (user input form)
+├── index.html              # Frontend (user input form)
 ├── requirements.txt        # Required dependencies
 └── README.md               # Project documentation
-
+```
 
 🧠 Model Details
 
